@@ -6,7 +6,7 @@ mod lib;
 fn main() {
     let expensive_calculation = |identifier| {
         println!(
-            "Could not find cached value for '{}'. Running calculation...",
+            "Could not find '{}' in cache. Running calculation...",
             identifier
         );
         thread::sleep(Duration::from_secs(2));

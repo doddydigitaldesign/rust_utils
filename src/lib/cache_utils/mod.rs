@@ -12,7 +12,8 @@ impl<K: Eq + Hash + Copy, F: Fn(K) -> K> CachedClosure<K, F> {
         CachedClosure { computation, value }
     }
     pub fn value(&mut self, arg: K) -> K {
-        if self.value.contains_key(&arg) == true {
+        // let test = *self.value.entry(arg).or_insert((self.computation)(arg)); // TODO: Rewrite if-statement
+        if self.value.contains_key(&arg) {
             let v = self.value.get(&arg);
             match v {
                 Some(v) => *v,
@@ -31,7 +32,6 @@ impl<K: Eq + Hash + Copy, F: Fn(K) -> K> CachedClosure<K, F> {
 /// Memoization for closures
 /// # Examples
 /// ```
-/// fn main() {
 ///     let expensive_calculation = |identifier| {
 ///         println!(
 ///             "Could not find cached value for '{}'. Running calculation...",
@@ -42,7 +42,6 @@ impl<K: Eq + Hash + Copy, F: Fn(K) -> K> CachedClosure<K, F> {
 ///     };
 ///     let mut memoized_calculation = lib::cache_utils::memoized_closure(expensive_calculation);
 ///     assert_eq!(memoized_calculation.value("test"), "test");
-/// }
 ///```
 /// To Do:
 /// 1. Generalize allowed types of F
@@ -50,6 +49,5 @@ impl<K: Eq + Hash + Copy, F: Fn(K) -> K> CachedClosure<K, F> {
 /// 3. Improve API
 /// 4. Modularize?
 pub fn memoized_closure<K: Eq + Hash + Copy, F: Fn(K) -> K>(f: F) -> CachedClosure<K, F> {
-    let result = CachedClosure::new(f);
-    return result;
+    CachedClosure::new(f)
 }

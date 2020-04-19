@@ -34,4 +34,8 @@ fn main() {
         n % 4 == 0
     });
     assert_eq!(filtered_data, [4]);
+
+    // Store utils
+    let my_guid = lib::store_utils::create_guid();
+    println!("my_guid: {}", my_guid);
 }

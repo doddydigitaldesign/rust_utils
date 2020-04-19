@@ -12,7 +12,6 @@ impl<K: Eq + Hash + Copy, F: Fn(K) -> K> CachedClosure<K, F> {
         CachedClosure { computation, value }
     }
     pub fn value(&mut self, arg: K) -> K {
-        // let test = *self.value.entry(arg).or_insert((self.computation)(arg)); // TODO: Rewrite if-statement
         if self.value.contains_key(&arg) {
             let v = self.value.get(&arg);
             match v {
